@@ -2,16 +2,24 @@ package models
 
 import (
 	"time"
-
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type User struct {
-	ID        primitive.ObjectID `bson:"_id,omitempy" json:"id,omitempy"`
-	Name      string             `json:"name"`
-	Email     string             `json:"email"`
-	CreatedAt time.Time          `bson:"created_at" json:"created_at"`
-	UpdatedAt time.Time          `bson:"updated_at" json:"updated_at,omitempy"`
+	//ID        primitive.ObjectID `bson:"_id,omitempy" json:"id,omitempy"`
+	Name      string    `json:"name"`
+	Email     string    `json:"email"`
+	CreatedAt time.Time `bson:"created_at" json:"created_at"`
+	UpdatedAt time.Time `bson:"updated_at" json:"updated_at,omitempy"`
 }
 
 type Users []*User
+
+//curl http://localhost:8080/users
+
+/*
+curl http://localhost:8080/users \
+    --include \
+    --header "Content-Type: application/json" \
+    --request "POST" \
+    --data '{"Name": "evy222", "Email": "em2@gg.com"}'
+*/

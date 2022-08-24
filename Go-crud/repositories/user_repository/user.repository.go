@@ -17,6 +17,8 @@ var ctx = context.Background()
 func Create(User m.User) error {
 
 	var err error
+	User.CreatedAt = time.Now()
+	User.UpdatedAt = time.Now()
 	_, err = collection.InsertOne(ctx, User)
 	if err != nil {
 		return err
@@ -74,7 +76,7 @@ func Delete(userId string) error {
 		return err
 	}
 
-	filter := bson.M{"id": oid}
+	filter := bson.M{"_id": oid}
 	_, err = collection.DeleteOne(ctx, filter)
 
 	if err != nil {

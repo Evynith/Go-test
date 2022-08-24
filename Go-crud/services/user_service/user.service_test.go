@@ -2,17 +2,14 @@ package user_service
 
 import (
 	"testing"
-	"time"
 
 	m "go-crud/models"
 )
 
 func TestCreate(t *testing.T) {
 	user := m.User{
-		Name:      "Evy",
-		Email:     "evynith@gmail.com",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		Name:  "Evy3",
+		Email: "evynith@gmail.com",
 	}
 	err := Create(user) //user_service esta implicito porque esta en el mismo paquete
 
@@ -45,7 +42,7 @@ func TestUpdate(t *testing.T) {
 		Email: "email.falso@123",
 	}
 
-	err := Update(user, "0")
+	err := Update(user, "000000000000000000000000")
 
 	if err != nil {
 		t.Error("hubo un error")
@@ -56,7 +53,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	err := Delete("0")
+	err := Delete("000000000000000000000000")
 
 	if err != nil {
 		t.Error("hubo un error")
