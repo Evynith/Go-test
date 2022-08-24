@@ -15,6 +15,7 @@ func main() {
 	fmt.Println("Init API!")
 	router := gin.Default()
 	router.GET("/users", u.GetUsers)
+	router.GET("/users/:id", u.GetUser)
 	router.POST("/users", u.PostUsers)
 
 	router.Run("localhost:8080")

@@ -36,6 +36,17 @@ func TestRead(t *testing.T) {
 	}
 }
 
+func TestReadOne(t *testing.T) {
+	user, err := ReadOne("63063b9aae872a4c4b147dde")
+
+	if err != nil {
+		t.Error("hubo un error")
+		t.Fail()
+	} else {
+		t.Log("exito!", user)
+	}
+}
+
 func TestUpdate(t *testing.T) {
 	user := m.User{
 		Name:  "evy 2",

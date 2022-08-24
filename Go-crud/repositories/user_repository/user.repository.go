@@ -48,6 +48,21 @@ func Read() (m.Users, error) {
 	return users, nil
 }
 
+func ReadOne(userId string) (m.User, error) {
+	var err error
+	oid, _ := primitive.ObjectIDFromHex(userId)
+	filter := bson.M{"_id": oid}
+
+	var result m.User
+	user := collection.FindOne(ctx, filter).Decode(&result)
+
+	if user != nil {
+		return m.User{}, err
+	}
+	return result, nil
+
+}
+
 func Update(user m.User, userId string) error {
 	var err error
 	oid, _ := primitive.ObjectIDFromHex(userId)

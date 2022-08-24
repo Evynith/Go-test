@@ -17,6 +17,16 @@ func GetUsers(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, usuarios)
 }
 
+func GetUser(c *gin.Context) {
+	id := c.Param("id")
+	user, err := u.ReadOne(id)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	c.IndentedJSON(http.StatusOK, user)
+}
+
 func PostUsers(c *gin.Context) {
 	var newUser m.User
 	if err := c.BindJSON(&newUser); err != nil {

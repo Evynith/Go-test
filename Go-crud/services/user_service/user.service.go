@@ -23,6 +23,15 @@ func Read() (m.Users, error) {
 	return users, nil
 }
 
+func ReadOne(userId string) (m.User, error) {
+
+	user, err := userRepository.ReadOne(userId)
+	if err != nil {
+		return m.User{}, err
+	}
+	return user, nil
+}
+
 func Update(user m.User, userId string) error {
 	err := userRepository.Update(user, userId)
 	if err != nil {
