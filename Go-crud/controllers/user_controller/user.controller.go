@@ -41,3 +41,27 @@ func PostUsers(c *gin.Context) {
 	}
 	c.IndentedJSON(http.StatusCreated, newUser)
 }
+
+func DeleteUser(c *gin.Context) {
+	id := c.Param("id")
+	err := u.Delete(id)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	c.Status(200)
+}
+
+func PutUser(c *gin.Context) {
+	id := c.Param("id")
+	var newUser m.User
+	if err := c.BindJSON(&newUser); err != nil {
+		return
+	}
+	err := u.Update(newUser, id)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	c.IndentedJSON(http.StatusOK, newUser)
+}

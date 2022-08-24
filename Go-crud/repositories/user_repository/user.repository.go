@@ -86,12 +86,8 @@ func Update(user m.User, userId string) error {
 func Delete(userId string) error {
 	var err error
 	oid, _ := primitive.ObjectIDFromHex(userId)
-
-	if err != nil {
-		return err
-	}
-
 	filter := bson.M{"_id": oid}
+
 	_, err = collection.DeleteOne(ctx, filter)
 
 	if err != nil {

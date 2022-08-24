@@ -23,3 +23,10 @@ curl http://localhost:8080/users \
     --request "POST" \
     --data '{"Name": "evy222", "Email": "em2@gg.com"}'
 */
+
+/*
+curl http://localhost:8080/users/63063fc5f8db717c87dc6cee --include --header "Content-Type: application/json" --request "PUT" --data '{"name": "evyPut", "email": "evy.post@gmail.com"}'
+*/
+/*
+curl http://localhost:8080/users/63063fc5f8db717c87dc6cee --include --header "Content-Type: application/json" --request "DELETE"
+*/
