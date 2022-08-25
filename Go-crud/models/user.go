@@ -30,3 +30,4 @@ curl http://localhost:8080/users/63063fc5f8db717c87dc6cee --include --header "Co
 /*
 curl http://localhost:8080/users/63063fc5f8db717c87dc6cee --include --header "Content-Type: application/json" --request "DELETE"
 */
+//curl --user blablabla@gmail.com:123456 http://localhost:8080/login
