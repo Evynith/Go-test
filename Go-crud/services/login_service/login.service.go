@@ -1,21 +1,14 @@
 package login_service
 
-type LoginService interface {
-	LoginUser(email string, password string) bool
-}
+import (
+	auth "go-crud/repositories/auth_repository"
+)
 
-type LoginInformation struct {
-	Username string
-	Password string
-}
+func LoginUser(email string, password string) bool {
+	user, err := auth.SearchUser(email)
 
-func StaticLoginService() LoginService {
-	return &LoginInformation{
-		Username: "blablabla@gmail.com",
-		Password: "123456",
+	if err != nil {
+		return false
 	}
-}
-
-func (info *LoginInformation) LoginUser(email string, password string) bool {
-	return info.Username == email && info.Password == password
+	return user.Password == password
 }
