@@ -12,3 +12,15 @@ func LoginUser(email string, password string) bool {
 	}
 	return user.Password == password
 }
+
+func SaveToken(username string, token string) bool {
+	err := auth.PersistToken(username, token)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func ExistsToken(token string) bool {
+	return auth.ExistsToken(token)
+}

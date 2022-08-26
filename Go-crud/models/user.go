@@ -34,3 +34,7 @@ curl http://localhost:8080/users/63063fc5f8db717c87dc6cee --include --header "Co
 /*
 curl http://localhost:8080/login --include --header "Content-Type: application/json" --request "POST" --data '{"Username": "blablabla@gmail.com", "Password": "123456"}'
 */
+
+/*
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYmxhYmxhYmxhQGdtYWlsLmNvbSIsInVzZXIiOnRydWUsImV4cCI6MTY2MTY0NzA5MiwiaWF0IjoxNjYxNDc0MjkyLCJpc3MiOiJSb2hhbiJ9.YmxO9kFC4ySjzyhcrpBlq4VcIOhi0isdHXOsGyg2qSM" http://localhost:8080/users
+*/

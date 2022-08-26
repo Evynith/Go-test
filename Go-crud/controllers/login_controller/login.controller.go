@@ -1,7 +1,7 @@
 package login_controller
 
 import (
-	"go-crud/credentials"
+	m "go-crud/models"
 	service "go-crud/services/login_service"
 
 	"github.com/gin-gonic/gin"
@@ -9,15 +9,17 @@ import (
 
 func Login(ctx *gin.Context) string {
 	var jwtService service.JWTService = service.JWTAuthService()
-	var credential credentials.LoginCredentials
+	var credential m.Client
+	var token string = ""
 	err := ctx.ShouldBind(&credential)
 	if err != nil {
 		return "no data found"
 	}
 	isUserAuthenticated := service.LoginUser(credential.Username, credential.Password)
 	if isUserAuthenticated {
-		return jwtService.GenerateToken(credential.Username, true)
-
+		token = jwtService.GenerateToken(credential.Username, true)
 	}
-	return ""
+	service.SaveToken(credential.Username, token)
+
+	return token
 }

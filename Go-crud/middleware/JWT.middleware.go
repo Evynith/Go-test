@@ -2,6 +2,9 @@ package middleware
 
 import (
 	"fmt"
+	"log"
+
+	//m "go-crud/models"
 	service "go-crud/services/login_service"
 	"net/http"
 
@@ -11,17 +14,20 @@ import (
 
 func AuthorizeJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		const BEARER_SCHEMA = "Bearer"
+		const BEARER_SCHEMA = "Bearer "
 		authHeader := c.GetHeader("Authorization")
 		tokenString := authHeader[len(BEARER_SCHEMA):]
+		//log.Println(tokenString)
 		token, err := service.JWTAuthService().ValidateToken(tokenString)
-		if token.Valid {
-			claims := token.Claims.(jwt.MapClaims)
-			fmt.Println(claims)
-		} else {
-			fmt.Println(err)
-			c.AbortWithStatus(http.StatusUnauthorized)
+		log.Println(token.Claims.(jwt.MapClaims))
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			if service.ExistsToken(tokenString) {
+				fmt.Println(claims)
+				c.Next()
+			}
 		}
-
+		fmt.Println(err)
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
 	}
 }
