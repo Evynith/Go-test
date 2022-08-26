@@ -24,3 +24,11 @@ func SaveToken(username string, token string) bool {
 func ExistsToken(token string) bool {
 	return auth.ExistsToken(token)
 }
+
+func TypeUser(username string) string {
+	u, err := auth.SearchUser(username)
+	if err != nil {
+		return ""
+	}
+	return u.Type
+}

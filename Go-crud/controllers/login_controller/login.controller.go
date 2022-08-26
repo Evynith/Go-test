@@ -17,7 +17,7 @@ func Login(ctx *gin.Context) string {
 	}
 	isUserAuthenticated := service.LoginUser(credential.Username, credential.Password)
 	if isUserAuthenticated {
-		token = jwtService.GenerateToken(credential.Username, true)
+		token = jwtService.GenerateToken(credential.Username)
 	}
 	service.SaveToken(credential.Username, token)
 

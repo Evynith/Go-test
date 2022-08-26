@@ -22,8 +22,10 @@ func AuthorizeJWT() gin.HandlerFunc {
 		log.Println(token.Claims.(jwt.MapClaims))
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			if service.ExistsToken(tokenString) {
-				fmt.Println(claims)
-				c.Next()
+				fmt.Println(claims["name"])
+				if claims["user"] == "admin" {
+					c.Next()
+				}
 			}
 		}
 		fmt.Println(err)
