@@ -14,6 +14,7 @@ import (
 type JWTService interface {
 	GenerateToken(email string) string
 	ValidateToken(token string) (*jwt.Token, error)
+	ValidateUser(encodedToken string, userRequired string) bool
 }
 type authCustomClaims struct {
 	Name string `json:"name"`
@@ -72,4 +73,19 @@ func (service *jwtServices) ValidateToken(encodedToken string) (*jwt.Token, erro
 		return []byte(service.secretKey), nil
 	})
 
+}
+
+func (service *jwtServices) ValidateUser(encodedToken string, userRequired string) bool {
+	var result bool = false
+	token, err := service.ValidateToken(encodedToken)
+	if err != nil {
+		result = false
+	} else {
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			if claims["user"] == userRequired {
+				result = true
+			}
+		}
+	}
+	return result
 }

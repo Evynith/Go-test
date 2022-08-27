@@ -23,13 +23,25 @@ func AuthorizeJWT() gin.HandlerFunc {
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			if service.ExistsToken(tokenString) {
 				fmt.Println(claims["name"])
-				if claims["user"] == "admin" {
-					c.Next()
-				}
+				c.Next()
 			}
 		}
 		fmt.Println(err)
 		c.AbortWithStatus(http.StatusUnauthorized)
 		return
+	}
+}
+
+func OnlyAdmin(user string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		const BEARER_SCHEMA = "Bearer "
+		authHeader := c.GetHeader("Authorization")
+		tokenString := authHeader[len(BEARER_SCHEMA):]
+		if service.JWTAuthService().ValidateUser(tokenString, "admin") == true {
+			c.Next()
+		} else {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
 	}
 }
