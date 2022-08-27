@@ -13,9 +13,9 @@ func Create(user m.User) error {
 	return nil
 }
 
-func Read() (m.Users, error) {
+func Read(name string, date1 string, date2 string) (m.Users, error) {
 
-	users, err := userRepository.Read()
+	users, err := userRepository.Read(name, date1, date2)
 
 	if err != nil {
 		return nil, err

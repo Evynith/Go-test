@@ -21,21 +21,22 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-func TestRead(t *testing.T) {
-	users, err := Read()
+/*
+	func TestRead(t *testing.T) {
+		users, err := Read()
 
-	if err != nil {
-		t.Error("hubo un error")
-		t.Fail()
+		if err != nil {
+			t.Error("hubo un error")
+			t.Fail()
+		}
+		if len(users) == 0 {
+			t.Error("No hay elementos para mostrar")
+			t.Fail()
+		} else {
+			t.Log("exito!")
+		}
 	}
-	if len(users) == 0 {
-		t.Error("No hay elementos para mostrar")
-		t.Fail()
-	} else {
-		t.Log("exito!")
-	}
-}
-
+*/
 func TestReadOne(t *testing.T) {
 	user, err := ReadOne("63063b9aae872a4c4b147dde")
 

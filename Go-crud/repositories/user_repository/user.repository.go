@@ -2,6 +2,7 @@ package user_repository
 
 import (
 	"context"
+	"fmt"
 	"go-crud/database"
 	"time"
 
@@ -27,8 +28,44 @@ func Create(User m.User) error {
 	return nil
 }
 
-func Read() (m.Users, error) {
-	filter := bson.D{}
+func filterUser(name string, date1 string, date2 string) bson.M {
+	filter := bson.M{}
+	nDate1, _ := time.Parse("2006-01-02", date1)
+	nDate2, _ := time.Parse("2006-01-02", date2)
+	nDate2 = nDate2.Add(24 * time.Hour)
+
+	date1Time := primitive.NewDateTimeFromTime(nDate1)
+	date2Time := primitive.NewDateTimeFromTime(nDate2)
+
+	if name != "" {
+		newSearch := bson.M{
+			"$search": name,
+		}
+		filter["$text"] = newSearch
+	}
+	if date1 != "" && date2 != "" {
+		newSearch := bson.M{
+			"$gte": date1Time,
+			"$lte": date2Time,
+		}
+		filter["created_at"] = newSearch
+	} else if date1 != "" && date2 == "" {
+		newSearch := bson.M{
+			"$gte": date1Time,
+		}
+		filter["created_at"] = newSearch
+	} else if date1 == "" && date2 != "" {
+		newSearch := bson.M{
+			"$lte": date2Time,
+		}
+		filter["created_at"] = newSearch
+	}
+	fmt.Println(nDate1, nDate2)
+	return filter
+}
+
+func Read(name string, date1 string, date2 string) (m.Users, error) {
+	filter := filterUser(name, date1, date2)
 	elems, err := collection.Find(ctx, filter)
 	var users m.Users
 	if err != nil {

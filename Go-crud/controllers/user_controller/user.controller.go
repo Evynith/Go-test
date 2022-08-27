@@ -9,7 +9,11 @@ import (
 )
 
 func GetUsers(c *gin.Context) {
-	usuarios, err := u.Read()
+	name, _ := c.GetQuery("name")   //contiene string llegada
+	date1, _ := c.GetQuery("desde") //fecha(created_at) - ?null
+	date2, _ := c.GetQuery("hasta") //fecha(created_at) - ?null
+
+	usuarios, err := u.Read(name, date1, date2)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return

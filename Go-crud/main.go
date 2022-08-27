@@ -28,14 +28,14 @@ func main() {
 	private1 := router.Group("/users")
 	private1.Use(authHandler.AuthorizeJWT())
 	{
-		private1.GET("/", u.GetUsers)
-		private2 := private1.Group("/")
+		private1.GET("", u.GetUsers)
+		private2 := private1.Group("")
 		private2.Use(authHandler.OnlyAdmin(typeUser))
 		{
-			private2.GET("/:id", u.GetUser)
-			private2.POST("/", u.PostUsers)
-			private2.DELETE("/:id", u.DeleteUser)
-			private2.PUT("/:id", u.PutUser)
+			private2.GET(":id", u.GetUser)
+			private2.POST("", u.PostUsers)
+			private2.DELETE(":id", u.DeleteUser)
+			private2.PUT(":id", u.PutUser)
 		}
 	}
 
