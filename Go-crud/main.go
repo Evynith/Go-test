@@ -24,21 +24,19 @@ func main() {
 			ctx.JSON(http.StatusUnauthorized, nil)
 		}
 	})
-
-	private1 := router.Group("/")
+	var typeUser string = "admin"
+	private1 := router.Group("/users")
 	private1.Use(authHandler.AuthorizeJWT())
 	{
-		private1.GET("/users", u.GetUsers)
-	}
-
-	var typeUser string = "admin"
-	private2 := router.Group("/")
-	private2.Use(authHandler.AuthorizeJWT(), authHandler.OnlyAdmin(typeUser))
-	{
-		private2.GET("/users/:id", u.GetUser)
-		private2.POST("/users", u.PostUsers)
-		private2.DELETE("/users/:id", u.DeleteUser)
-		private2.PUT("/users/:id", u.PutUser)
+		private1.GET("/", u.GetUsers)
+		private2 := private1.Group("/")
+		private2.Use(authHandler.OnlyAdmin(typeUser))
+		{
+			private2.GET("/:id", u.GetUser)
+			private2.POST("/", u.PostUsers)
+			private2.DELETE("/:id", u.DeleteUser)
+			private2.PUT("/:id", u.PutUser)
+		}
 	}
 
 	router.Run("localhost:8080")
